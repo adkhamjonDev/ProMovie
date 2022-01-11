@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity">
+    <ImageView
+        android:src="@drawable/ic_video_camera_light"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="@string/app_name"
+        android:textSize="@dimen/_30sdp"
+        android:textStyle="bold"
+        android:fontFamily="@font/luxurious"
+        android:textColor="@color/splash_text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
