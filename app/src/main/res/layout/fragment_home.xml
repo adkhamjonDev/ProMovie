@@ -9,9 +9,6 @@
     android:background="@color/fragment_back"
     tools:context=".ui.home.HomeFragment">
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/grid_item_3"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
         android:id="@+id/recView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
