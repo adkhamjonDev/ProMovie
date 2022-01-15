@@ -92,7 +92,7 @@
                         android:layout_weight="1">
                         <androidx.cardview.widget.CardView
                             android:visibility="gone"
-                            android:id="@+id/gridView"
+                            android:id="@+id/linearView"
                             app:cardBackgroundColor="@color/toolbar_background_color"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="0dp"
@@ -108,8 +108,8 @@
                                 android:layout_height="match_parent"/>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
-                            android:visibility="visible"
-                            android:id="@+id/linearView"
+                            android:visibility="gone"
+                            android:id="@+id/grid3View"
                             app:cardBackgroundColor="@color/toolbar_background_color"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="0dp"
@@ -121,6 +121,23 @@
                             <ImageView
                                 android:padding="12dp"
                                 android:src="@drawable/ic_grid"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:visibility="visible"
+                            android:id="@+id/grid2View"
+                            app:cardBackgroundColor="@color/toolbar_background_color"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp">
+                            <ImageView
+                                android:padding="12dp"
+                                android:src="@drawable/ic_grid_svgrepo_com"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
                         </androidx.cardview.widget.CardView>

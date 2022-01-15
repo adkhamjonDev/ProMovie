@@ -19,4 +19,5 @@
     <color name="nav_header_light">#121212</color>
     <color name="fragment_back">#303030</color>
     <color name="item_bottom_linear">#66000000</color>
+    <color name="item_linear_txt">#BABABA</color>
 </resources>

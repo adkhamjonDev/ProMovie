@@ -88,8 +88,17 @@ class RvAdapter(var context: Context,var gridLayoutManager: GridLayoutManager,va
                     onItemClickListener.itemClick(movie)
                 }
             }
-        } else {
+        } else if(getItemViewType(position)==2){
             val toVh = holder as Grid2
+            getItem(position)?.let { movie->
+                toVh.onBind(movie)
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.itemClick(movie)
+                }
+            }
+        }
+        else{
+            val toVh = holder as Grid3
             getItem(position)?.let { movie->
                 toVh.onBind(movie)
                 holder.itemView.setOnClickListener {

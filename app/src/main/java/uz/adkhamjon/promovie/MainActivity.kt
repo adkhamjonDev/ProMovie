@@ -1,5 +1,4 @@
 package uz.adkhamjon.promovie
-
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -18,15 +17,16 @@ import com.vimalcvs.switchdn.DayNightSwitchListener
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProviders
 import uz.adkhamjon.promovie.utils.SharedPreferenceTheme
-
-
+import uz.adkhamjon.promovie.viewmodels.GridTypeViewModel
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferenceTheme: SharedPreferenceTheme
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var gridTypeViewModel: GridTypeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        //----------------------------------------------------
         sharedPreferenceTheme= SharedPreferenceTheme.getInstance(this)
         super.onCreate(savedInstanceState)
         if(sharedPreferenceTheme.hasDark) {
@@ -38,9 +38,11 @@ class MainActivity : AppCompatActivity() {
         }
         window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_main)
         isUsingNightModeResources()
+
+        gridTypeViewModel=ViewModelProviders.of(this)[GridTypeViewModel::class.java]
+        //--------------------------------------------------------
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -58,17 +60,28 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        binding.appBarMain.grid2View.setOnClickListener {
+            binding.appBarMain.linearView.visibility= View.GONE
+            binding.appBarMain.grid2View.visibility= View.GONE
+            binding.appBarMain.grid3View.visibility= View.VISIBLE
+            gridTypeViewModel.setType("2")
 
-        binding.appBarMain.gridView.setOnClickListener {
+        }
+        binding.appBarMain.grid3View.setOnClickListener {
             binding.appBarMain.linearView.visibility= View.VISIBLE
-            binding.appBarMain.gridView.visibility= View.GONE
+            binding.appBarMain.grid2View.visibility= View.GONE
+            binding.appBarMain.grid3View.visibility= View.GONE
+            gridTypeViewModel.setType("3")
 
         }
         binding.appBarMain.linearView.setOnClickListener {
             binding.appBarMain.linearView.visibility= View.GONE
-            binding.appBarMain.gridView.visibility= View.VISIBLE
+            binding.appBarMain.grid2View.visibility= View.VISIBLE
+            binding.appBarMain.grid3View.visibility= View.GONE
+            gridTypeViewModel.setType("1")
 
         }
+
         binding.switchItem.setIsNight(sharedPreferenceTheme.hasDark)
         binding.switchItem.setListener { isNight ->
             if (isNight) {
