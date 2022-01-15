@@ -13,6 +13,10 @@
     <color name="splash_image_color">#FFFFFF</color>
     <color name="status_bar_color_splash">#000000</color>
     <color name="status_bar_color_main">#000000</color>
-    <color name="toolbar_background_color">#000000</color>
+    <color name="toolbar_background_color">#212121</color>
     <color name="toggle_color">#FFFFFF</color>
+    <color name="txt_color">#FFFFFF</color>
+    <color name="nav_header_light">#121212</color>
+    <color name="fragment_back">#303030</color>
+    <color name="item_bottom_linear">#66000000</color>
 </resources>
