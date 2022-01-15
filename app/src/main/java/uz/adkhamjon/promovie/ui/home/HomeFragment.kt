@@ -17,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import uz.adkhamjon.promovie.App
+import uz.adkhamjon.promovie.R
 import uz.adkhamjon.promovie.adapters.RvAdapter
 import uz.adkhamjon.promovie.databinding.FragmentHomeBinding
 import uz.adkhamjon.promovie.models.MovieClass
@@ -46,7 +47,8 @@ class HomeFragment : Fragment() {
         gridLayoutManager= GridLayoutManager(context,1)
         rvAdapter = RvAdapter(requireContext(),gridLayoutManager,object:RvAdapter.OnItemClickListener{
             override  fun itemClick(movieClass: MovieClass) {
-
+                val bundle= bundleOf("image" to movieClass.poster_path)
+                findNavController().navigate(R.id.imageFragment,bundle)
             }
         })
         binding.recView.hasFixedSize()

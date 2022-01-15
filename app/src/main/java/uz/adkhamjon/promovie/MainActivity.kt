@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate
                 .setDefaultNightMode(
                     AppCompatDelegate
-                        .MODE_NIGHT_YES
+                        .MODE_NIGHT_NO
                 )
         }
         window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_main)
@@ -82,24 +82,24 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.switchItem.setIsNight(sharedPreferenceTheme.hasDark)
-        binding.switchItem.setListener { isNight ->
-            if (isNight) {
-                AppCompatDelegate
-                    .setDefaultNightMode(
-                        AppCompatDelegate
-                            .MODE_NIGHT_YES
-                    )
-                sharedPreferenceTheme.hasDark=true
-            } else {
-                AppCompatDelegate
-                    .setDefaultNightMode(
-                        AppCompatDelegate
-                            .MODE_NIGHT_NO
-                    )
-                sharedPreferenceTheme.hasDark=false
-            }
-        }
+//        binding.switchItem.setIsNight(sharedPreferenceTheme.hasDark)
+//        binding.switchItem.setListener { isNight ->
+//            if (isNight) {
+//                AppCompatDelegate
+//                    .setDefaultNightMode(
+//                        AppCompatDelegate
+//                            .MODE_NIGHT_YES
+//                    )
+//                sharedPreferenceTheme.hasDark=true
+//            } else {
+//                AppCompatDelegate
+//                    .setDefaultNightMode(
+//                        AppCompatDelegate
+//                            .MODE_NIGHT_NO
+//                    )
+//                sharedPreferenceTheme.hasDark=false
+//            }
+//        }
     }
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -120,5 +120,11 @@ class MainActivity : AppCompatActivity() {
             Configuration.UI_MODE_NIGHT_UNDEFINED -> sharedPreferenceTheme.hasDark=false
 
         }
+    }
+    fun hideToolbar(){
+        binding.appBarMain.toolbar.visibility=View.GONE
+    }
+    fun showToolbar(){
+        binding.appBarMain.toolbar.visibility=View.VISIBLE
     }
 }

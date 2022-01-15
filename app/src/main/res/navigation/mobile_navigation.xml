@@ -10,5 +10,10 @@
         android:name="uz.adkhamjon.promovie.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="uz.adkhamjon.promovie.ui.image.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" />
 
 </navigation>
