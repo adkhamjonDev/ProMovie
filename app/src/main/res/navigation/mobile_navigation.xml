@@ -15,5 +15,10 @@
         android:name="uz.adkhamjon.promovie.ui.image.ImageFragment"
         android:label="fragment_image"
         tools:layout="@layout/fragment_image" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="uz.adkhamjon.promovie.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 
 </navigation>

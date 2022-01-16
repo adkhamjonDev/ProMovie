@@ -1,4 +1,5 @@
 package uz.adkhamjon.promovie
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -13,18 +14,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import uz.adkhamjon.promovie.databinding.ActivityMainBinding
-import com.vimalcvs.switchdn.DayNightSwitchListener
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProviders
+import uz.adkhamjon.promovie.databinding.TypeDialogBinding
 import uz.adkhamjon.promovie.utils.SharedPreferenceTheme
-import uz.adkhamjon.promovie.viewmodels.GridTypeViewModel
+import uz.adkhamjon.promovie.viewmodels.TypeViewModel
+
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferenceTheme: SharedPreferenceTheme
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var gridTypeViewModel: GridTypeViewModel
+    private lateinit var typeViewModel: TypeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         //----------------------------------------------------
         sharedPreferenceTheme= SharedPreferenceTheme.getInstance(this)
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_main)
         isUsingNightModeResources()
 
-        gridTypeViewModel=ViewModelProviders.of(this)[GridTypeViewModel::class.java]
+        typeViewModel=ViewModelProviders.of(this)[TypeViewModel::class.java]
         //--------------------------------------------------------
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -64,22 +65,55 @@ class MainActivity : AppCompatActivity() {
             binding.appBarMain.linearView.visibility= View.GONE
             binding.appBarMain.grid2View.visibility= View.GONE
             binding.appBarMain.grid3View.visibility= View.VISIBLE
-            gridTypeViewModel.setType("2")
+            typeViewModel.setGridType("2")
 
         }
         binding.appBarMain.grid3View.setOnClickListener {
             binding.appBarMain.linearView.visibility= View.VISIBLE
             binding.appBarMain.grid2View.visibility= View.GONE
             binding.appBarMain.grid3View.visibility= View.GONE
-            gridTypeViewModel.setType("3")
+            typeViewModel.setGridType("3")
 
         }
         binding.appBarMain.linearView.setOnClickListener {
             binding.appBarMain.linearView.visibility= View.GONE
             binding.appBarMain.grid2View.visibility= View.VISIBLE
             binding.appBarMain.grid3View.visibility= View.GONE
-            gridTypeViewModel.setType("1")
+            typeViewModel.setGridType("1")
 
+        }
+
+        binding.appBarMain.showDialog.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val binding1= TypeDialogBinding.inflate(layoutInflater, null, false)
+            builder.setView(binding1.root)
+            val alertDialog=builder.create()
+            binding1.popular.setOnClickListener {
+                typeViewModel.setDialogType("Popular")
+                binding.appBarMain.tittle.text="Popular"
+                alertDialog.dismiss()
+            }
+            binding1.top.setOnClickListener {
+                typeViewModel.setDialogType("Top Rated")
+                binding.appBarMain.tittle.text="Top Rated"
+                alertDialog.dismiss()
+            }
+            binding1.upcoming.setOnClickListener {
+                typeViewModel.setDialogType("Upcoming")
+                binding.appBarMain.tittle.text="Upcoming"
+                alertDialog.dismiss()
+            }
+            binding1.nowPlaying.setOnClickListener {
+                typeViewModel.setDialogType("Now Playing")
+                binding.appBarMain.tittle.text="Now Playing"
+                alertDialog.dismiss()
+            }
+            alertDialog.show()
+
+        }
+
+        binding.appBarMain.search.setOnClickListener {
+            navController.navigate(R.id.searchFragment)
         }
 
 //        binding.switchItem.setIsNight(sharedPreferenceTheme.hasDark)

@@ -24,8 +24,6 @@ class ImageFragment : Fragment() {
         if(arguments!=null){
             image=arguments?.getString("image")as String
         }
-        Glide.with(requireActivity()).load("https://image.tmdb.org/t/p/w500/${image}")
-            .into(binding.viewPager)
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }

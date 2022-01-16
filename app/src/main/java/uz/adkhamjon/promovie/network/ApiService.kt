@@ -11,4 +11,22 @@ interface ApiService {
         @Query("language") category: String="en-US",
         @Query("page") page: Int
     ): MainClass
+    @GET("3/movie/top_rated")
+    suspend fun getTopRated(
+        @Query("api_key") api_key:String="44f66b1676556437f4731985995f2dea",
+        @Query("language") category: String="en-US",
+        @Query("page") page: Int
+    ): MainClass
+    @GET("3/movie/upcoming")
+    suspend fun getUpcoming(
+        @Query("api_key") api_key:String="44f66b1676556437f4731985995f2dea",
+        @Query("language") category: String="en-US",
+        @Query("page") page: Int
+    ): MainClass
+    @GET("3/movie/now_playing")
+    suspend fun getNowPlaying(
+        @Query("api_key") api_key:String="44f66b1676556437f4731985995f2dea",
+        @Query("language") category: String="en-US",
+        @Query("page") page: Int
+    ): MainClass
 }

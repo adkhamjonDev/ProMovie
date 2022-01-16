@@ -6,17 +6,23 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 
 import uz.adkhamjon.promovie.network.ApiService
+import uz.adkhamjon.promovie.pagination.NowPlayingPagination
 import uz.adkhamjon.promovie.pagination.PopularPagination
+import uz.adkhamjon.promovie.pagination.TopRatedPagination
+import uz.adkhamjon.promovie.pagination.UpcomingPagination
 import javax.inject.Inject
 
 class MovieViewModel @Inject constructor(val apiService: ApiService, val name:String) : ViewModel() {
     val popular = Pager(PagingConfig(499)) {
         PopularPagination(apiService)
     }.flow.cachedIn(viewModelScope)
-//    val topRated = Pager(PagingConfig(499)) {
-//        TopRatedPagination(apiService)
-//    }.flow.cachedIn(viewModelScope)
-//    val upcoming = Pager(PagingConfig(499)) {
-//        UpcomingPagination(apiService)
-//    }.flow.cachedIn(viewModelScope)
+    val topRated = Pager(PagingConfig(499)) {
+        TopRatedPagination(apiService)
+    }.flow.cachedIn(viewModelScope)
+    val upcoming = Pager(PagingConfig(499)) {
+        UpcomingPagination(apiService)
+    }.flow.cachedIn(viewModelScope)
+    val nowPlaying = Pager(PagingConfig(499)) {
+        NowPlayingPagination(apiService)
+    }.flow.cachedIn(viewModelScope)
 }

@@ -33,7 +33,8 @@
                 android:layout_height="40dp">
                 <ImageView
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                    android:rotation="90"
+                    android:src="@drawable/ic__782742811535351484"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </androidx.cardview.widget.CardView>
@@ -52,8 +53,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp">
                 <ImageView
-                    android:padding="8dp"
-                    android:src="@drawable/ic_baseline_more_vert_24"
+                    android:padding="1dp"
+                    android:src="@drawable/ic_more_vert_svgrepo_com_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </androidx.cardview.widget.CardView>
@@ -92,14 +93,14 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp">
                 <ImageView
-                    android:padding="8dp"
-                    android:src="@drawable/ic_outline_share_24"
+                    android:padding="2dp"
+                    android:src="@drawable/ic__242354601553239395"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-    <ImageView
+    <androidx.viewpager2.widget.ViewPager2
         app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
