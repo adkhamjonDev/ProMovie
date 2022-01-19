@@ -5,6 +5,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.adkhamjon.promovie.network.ApiService
+import uz.adkhamjon.promovie.utils.Config
 import javax.inject.Singleton
 
 @Module
@@ -12,7 +13,7 @@ class NetworkModule() {
 
     @Singleton
     @Provides
-    fun provideBaseUrl():String="https://api.themoviedb.org/"
+    fun provideBaseUrl():String=Config.BASE_URL
 
     @Singleton
     @Provides

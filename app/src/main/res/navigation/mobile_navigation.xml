@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="uz.adkhamjon.promovie.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imageFragment"
         android:name="uz.adkhamjon.promovie.ui.image.ImageFragment"
@@ -20,5 +24,19 @@
         android:name="uz.adkhamjon.promovie.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="uz.adkhamjon.promovie.ui.info.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" >
+        <action
+            android:id="@+id/action_infoFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="uz.adkhamjon.promovie.MainActivity"
+        android:label="app_bar_main"
+        tools:layout="@layout/app_bar_main" />
 
 </navigation>

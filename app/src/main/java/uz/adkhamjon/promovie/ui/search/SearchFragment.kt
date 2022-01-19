@@ -23,7 +23,6 @@ class SearchFragment : Fragment() {
         (activity as MainActivity?)?.hideToolbar()
         binding=FragmentSearchBinding.inflate(inflater, container, false)
 
-
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }

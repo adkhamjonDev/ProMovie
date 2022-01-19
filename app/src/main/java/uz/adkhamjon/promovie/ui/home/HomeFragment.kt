@@ -18,6 +18,7 @@ import uz.adkhamjon.promovie.R
 import uz.adkhamjon.promovie.adapters.RvAdapter
 import uz.adkhamjon.promovie.databinding.FragmentHomeBinding
 import uz.adkhamjon.promovie.models.MovieClass
+import uz.adkhamjon.promovie.repository.MovieRepository
 import uz.adkhamjon.promovie.viewmodels.TypeViewModel
 import uz.adkhamjon.promovie.viewmodels.MovieViewModel
 import javax.inject.Inject
@@ -27,6 +28,8 @@ class HomeFragment : Fragment() {
     private lateinit var rvAdapter: RvAdapter
     @Inject
     lateinit var movieViewModel: MovieViewModel
+    @Inject
+    lateinit var movieRepository: MovieRepository
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var typeViewModel: TypeViewModel
     override fun onCreateView(
@@ -42,7 +45,8 @@ class HomeFragment : Fragment() {
         gridLayoutManager= GridLayoutManager(context,1)
         rvAdapter = RvAdapter(requireContext(),gridLayoutManager,object:RvAdapter.OnItemClickListener{
             override  fun itemClick(movieClass: MovieClass) {
-
+                val bundle= bundleOf("id" to movieClass.id)
+                findNavController().navigate(R.id.infoFragment,bundle)
             }
         })
         binding.recView.hasFixedSize()

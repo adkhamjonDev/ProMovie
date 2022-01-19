@@ -22,23 +22,14 @@ import uz.adkhamjon.promovie.utils.SharedPreferenceTheme
 import uz.adkhamjon.promovie.viewmodels.TypeViewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var sharedPreferenceTheme: SharedPreferenceTheme
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var typeViewModel: TypeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         //----------------------------------------------------
-        sharedPreferenceTheme= SharedPreferenceTheme.getInstance(this)
         super.onCreate(savedInstanceState)
-        if(sharedPreferenceTheme.hasDark) {
-            AppCompatDelegate
-                .setDefaultNightMode(
-                    AppCompatDelegate
-                        .MODE_NIGHT_NO
-                )
-        }
         window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_main)
-        isUsingNightModeResources()
 
         typeViewModel=ViewModelProviders.of(this)[TypeViewModel::class.java]
         //--------------------------------------------------------
@@ -116,24 +107,6 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.searchFragment)
         }
 
-//        binding.switchItem.setIsNight(sharedPreferenceTheme.hasDark)
-//        binding.switchItem.setListener { isNight ->
-//            if (isNight) {
-//                AppCompatDelegate
-//                    .setDefaultNightMode(
-//                        AppCompatDelegate
-//                            .MODE_NIGHT_YES
-//                    )
-//                sharedPreferenceTheme.hasDark=true
-//            } else {
-//                AppCompatDelegate
-//                    .setDefaultNightMode(
-//                        AppCompatDelegate
-//                            .MODE_NIGHT_NO
-//                    )
-//                sharedPreferenceTheme.hasDark=false
-//            }
-//        }
     }
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -145,15 +118,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-    private fun isUsingNightModeResources() {
-         when (resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES ->sharedPreferenceTheme.hasDark=true
-            Configuration.UI_MODE_NIGHT_NO -> sharedPreferenceTheme.hasDark=false
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> sharedPreferenceTheme.hasDark=false
-
-        }
     }
     fun hideToolbar(){
         binding.appBarMain.toolbar.visibility=View.GONE

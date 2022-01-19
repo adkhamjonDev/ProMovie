@@ -8,8 +8,7 @@ import javax.inject.Singleton
 import android.app.Application
 
 import dagger.BindsInstance
-
-
+import uz.adkhamjon.promovie.ui.info.InfoFragment
 
 
 @Singleton
@@ -17,6 +16,7 @@ import dagger.BindsInstance
 interface AppComponent {
 
     fun inject(homeFragment: HomeFragment)
+    fun inject(infoFragment: InfoFragment)
 
     @Component.Builder
     interface Builder {
