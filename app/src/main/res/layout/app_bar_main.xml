@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +8,9 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/appbar"
         app:elevation="0dp"
         android:layout_width="match_parent"
@@ -137,7 +141,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp">
                             <ImageView
-                                android:padding="12dp"
+                                android:padding="10dp"
                                 android:src="@drawable/ic_grid_svgrepo_com"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
@@ -150,16 +154,16 @@
                         android:layout_weight="1">
                         <androidx.cardview.widget.CardView
                             android:id="@+id/more"
-                            app:cardBackgroundColor="@color/toolbar_background_color"
-                            app:cardCornerRadius="20dp"
                             app:cardElevation="0dp"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp">
+                            app:cardCornerRadius="17.5dp"
+                            app:cardBackgroundColor="@color/toolbar_background_color"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp">
                             <ImageView
-                                android:padding="10dp"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_baseline_more_vert_24"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
@@ -170,10 +174,52 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:id="@+id/viewF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <include
+            android:id="@+id/contentMain"
+            layout="@layout/content_main" />
+    </LinearLayout>
 
-    <include
-        android:id="@+id/contentMain"
-        layout="@layout/content_main" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/internetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textStyle="bold"
+            android:text="Сервер не доступен"
+            android:textColor="#E6FFFFFF"
+            android:textSize="@dimen/_20sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:text="@string/internet_subtitle"
+            android:textColor="@color/item_linear_txt"
+            android:textSize="@dimen/_15sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/retry"
+            android:backgroundTint="#36BABABA"
+            android:text="Повторить"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

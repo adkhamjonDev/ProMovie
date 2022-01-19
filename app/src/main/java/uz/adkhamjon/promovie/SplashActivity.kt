@@ -2,14 +2,11 @@ package uz.adkhamjon.promovie
 
 
 import android.content.Intent
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 
 import uz.adkhamjon.promovie.databinding.ActivitySplashBinding
-import uz.adkhamjon.promovie.utils.SharedPreferenceTheme
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding:ActivitySplashBinding

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uz.adkhamjon.drawerbehavior.Advance3DDrawerLayout
+    android:background="@color/nav_header_light"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -38,8 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
                 android:id="@+id/logo"
-                android:layout_margin="30dp"
                 android:src="@drawable/ic_blue_long_1_8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

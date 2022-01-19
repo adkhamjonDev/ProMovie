@@ -1,5 +1,6 @@
 package uz.adkhamjon.promovie
 import android.app.AlertDialog
+import android.app.FragmentTransaction
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -14,18 +15,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import uz.adkhamjon.promovie.databinding.ActivityMainBinding
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProviders
+import com.droidnet.DroidListener
 import uz.adkhamjon.promovie.databinding.TypeDialogBinding
-import uz.adkhamjon.promovie.utils.SharedPreferenceTheme
 import uz.adkhamjon.promovie.viewmodels.TypeViewModel
+import com.droidnet.DroidNet
 
-class MainActivity : AppCompatActivity() {
+
+
+
+class MainActivity : AppCompatActivity(), DroidListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var typeViewModel: TypeViewModel
+    private lateinit var mDroidNet: DroidNet
+    private var internet=false
     override fun onCreate(savedInstanceState: Bundle?) {
         //----------------------------------------------------
         super.onCreate(savedInstanceState)
@@ -36,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
-
+        mDroidNet = DroidNet.getInstance()
+        mDroidNet.addInternetConnectivityListener(this)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -52,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+
+        binding.appBarMain.retry.setOnClickListener {
+
+        }
         binding.appBarMain.grid2View.setOnClickListener {
             binding.appBarMain.linearView.visibility= View.GONE
             binding.appBarMain.grid2View.visibility= View.GONE
@@ -73,7 +83,6 @@ class MainActivity : AppCompatActivity() {
             typeViewModel.setGridType("1")
 
         }
-
         binding.appBarMain.showDialog.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             val binding1= TypeDialogBinding.inflate(layoutInflater, null, false)
@@ -102,7 +111,6 @@ class MainActivity : AppCompatActivity() {
             alertDialog.show()
 
         }
-
         binding.appBarMain.search.setOnClickListener {
             navController.navigate(R.id.searchFragment)
         }
@@ -124,5 +132,11 @@ class MainActivity : AppCompatActivity() {
     }
     fun showToolbar(){
         binding.appBarMain.toolbar.visibility=View.VISIBLE
+    }
+    override fun onInternetConnectivityChanged(isConnected: Boolean) {
+        if(!isConnected){
+            binding.appBarMain.internetLayout.visibility=View.VISIBLE
+            binding.appBarMain.viewF.visibility=View.GONE
+        }
     }
 }

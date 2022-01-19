@@ -14,9 +14,9 @@ class TypeViewModel:ViewModel() {
         return gridType
     }
     fun setDialogType(str:String){
-        gridType.value=str
+        dialogType.value=str
     }
     fun getDialogType(): LiveData<String> {
-        return gridType
+        return dialogType
     }
 }

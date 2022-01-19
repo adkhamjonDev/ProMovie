@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -23,9 +24,6 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import java.util.*
 import kotlin.math.round
 
-/**
- * Created by Shiburagi on 21/09/2017.
- */
 open class AdvanceDrawerLayout : DrawerLayout {
     var settings = HashMap<Int, Setting?>()
     private var defaultScrimColor = -0x67000000
@@ -186,6 +184,7 @@ open class AdvanceDrawerLayout : DrawerLayout {
         }
     }
 
+    @SuppressLint("ResourceType")
     override fun openDrawer(drawerView: View, animate: Boolean) {
         super.openDrawer(drawerView, animate)
         post { updateSlideOffset(drawerView, if (isDrawerOpen(drawerView)) 1f else 0f) }
@@ -209,16 +208,16 @@ open class AdvanceDrawerLayout : DrawerLayout {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && setting.percentage < 1.0) {
                     if (drawerView.background is ColorDrawable) {
                         val color = ColorUtils.setAlphaComponent(statusBarColor, (255 - 255 * slideOffset).toInt())
-                        window.statusBarColor = color
+                        window.statusBarColor = Color.BLACK
                         val bgColor = (drawerView.background as ColorDrawable).color
-                        window.decorView.setBackgroundColor(bgColor)
+                        window.decorView.setBackgroundColor(Color.WHITE)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             systemUiVisibility = if (ColorUtils.calculateContrast(Color.WHITE, bgColor) < contrastThreshold && slideOffset > 0.4) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
                         }
                     } else if (drawerView.background is MaterialShapeDrawable
                             && (drawerView.background as MaterialShapeDrawable).fillColor != null) {
                         val color = ColorUtils.setAlphaComponent(statusBarColor, (255 - 255 * slideOffset).toInt())
-                        window.statusBarColor = color
+                        window.statusBarColor = Color.BLACK
                         val bgColor = (drawerView.background as MaterialShapeDrawable).fillColor!!.defaultColor
                         window.decorView.setBackgroundColor(bgColor)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

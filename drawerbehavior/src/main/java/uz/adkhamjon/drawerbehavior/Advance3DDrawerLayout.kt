@@ -5,9 +5,6 @@ import android.graphics.Color
 import android.util.AttributeSet
 import androidx.cardview.widget.CardView
 
-/**
- * Created by Shiburagi on 21/09/2017.
- */
 class Advance3DDrawerLayout : AdvanceDrawerLayout {
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
