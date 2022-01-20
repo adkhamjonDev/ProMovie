@@ -208,7 +208,7 @@ open class AdvanceDrawerLayout : DrawerLayout {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && setting.percentage < 1.0) {
                     if (drawerView.background is ColorDrawable) {
                         val color = ColorUtils.setAlphaComponent(statusBarColor, (255 - 255 * slideOffset).toInt())
-                        window.statusBarColor = Color.BLACK
+                        window.statusBarColor = color
                         val bgColor = (drawerView.background as ColorDrawable).color
                         window.decorView.setBackgroundColor(Color.WHITE)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -217,7 +217,7 @@ open class AdvanceDrawerLayout : DrawerLayout {
                     } else if (drawerView.background is MaterialShapeDrawable
                             && (drawerView.background as MaterialShapeDrawable).fillColor != null) {
                         val color = ColorUtils.setAlphaComponent(statusBarColor, (255 - 255 * slideOffset).toInt())
-                        window.statusBarColor = Color.BLACK
+                        window.statusBarColor = color
                         val bgColor = (drawerView.background as MaterialShapeDrawable).fillColor!!.defaultColor
                         window.decorView.setBackgroundColor(bgColor)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

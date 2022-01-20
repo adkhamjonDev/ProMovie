@@ -1,9 +1,13 @@
 package uz.adkhamjon.promovie
 import android.app.AlertDialog
 import android.app.FragmentTransaction
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,16 +16,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import uz.adkhamjon.promovie.databinding.ActivityMainBinding
 import androidx.lifecycle.ViewModelProviders
 import com.droidnet.DroidListener
 import uz.adkhamjon.promovie.databinding.TypeDialogBinding
 import uz.adkhamjon.promovie.viewmodels.TypeViewModel
 import com.droidnet.DroidNet
-
-
+import uz.adkhamjon.promovie.ui.home.HomeFragment
+import uz.adkhamjon.promovie.viewmodels.InternetViewModel
 
 
 class MainActivity : AppCompatActivity(), DroidListener {
@@ -29,14 +35,17 @@ class MainActivity : AppCompatActivity(), DroidListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var typeViewModel: TypeViewModel
+    private lateinit var internetViewModel: InternetViewModel
     private lateinit var mDroidNet: DroidNet
     private var internet=false
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         //----------------------------------------------------
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_main)
+        //window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_main)
 
         typeViewModel=ViewModelProviders.of(this)[TypeViewModel::class.java]
+        internetViewModel=ViewModelProviders.of(this)[InternetViewModel::class.java]
         //--------------------------------------------------------
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -60,6 +69,15 @@ class MainActivity : AppCompatActivity(), DroidListener {
 
 
         binding.appBarMain.retry.setOnClickListener {
+            if(internet){
+                binding.appBarMain.internetLayout.visibility=View.GONE
+                binding.appBarMain.viewF.visibility=View.VISIBLE
+                internetViewModel.setInternet("Connected")
+            }
+            else{
+                internetViewModel.setInternet("Disconnected")
+            }
+
 
         }
         binding.appBarMain.grid2View.setOnClickListener {
@@ -135,8 +153,10 @@ class MainActivity : AppCompatActivity(), DroidListener {
     }
     override fun onInternetConnectivityChanged(isConnected: Boolean) {
         if(!isConnected){
+            internet=false
             binding.appBarMain.internetLayout.visibility=View.VISIBLE
             binding.appBarMain.viewF.visibility=View.GONE
         }
+        else internet=true
     }
 }

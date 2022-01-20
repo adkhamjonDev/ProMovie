@@ -8,13 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.youtubeapi.utils.Status
+import com.google.android.youtube.player.*
 import com.mig35.carousellayoutmanager.CarouselLayoutManager
 import com.mig35.carousellayoutmanager.CarouselZoomPostLayoutListener
 import com.mig35.carousellayoutmanager.CenterScrollListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.coroutines.*
 import okhttp3.Dispatcher
 import uz.adkhamjon.promovie.App
@@ -29,6 +33,10 @@ import uz.adkhamjon.promovie.utils.Config
 import uz.adkhamjon.promovie.viewmodels.MovieViewModel
 import javax.inject.Inject
 
+
+
+
+
 class InfoFragment : Fragment() {
     private lateinit var binding:FragmentInfoBinding
     @Inject
@@ -37,6 +45,7 @@ class InfoFragment : Fragment() {
     private lateinit var companyItemAdapter: CompanyItemAdapter
     private lateinit var imageItemAdapter: ImageItemAdapter
     private lateinit var similarAdapter: SimilarAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -111,12 +120,21 @@ class InfoFragment : Fragment() {
 
         }
 
+        lifecycle.addObserver(binding.youTubePlayerView)
+
+        binding.youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+
+        })
+
+
+
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
 
         return binding.root
     }
+
     @SuppressLint("SetTextI18n")
     private fun setDetails(details: MovieDetails){
         binding.tittle.text=details.title
@@ -168,4 +186,7 @@ class InfoFragment : Fragment() {
         super.onResume()
         (activity as MainActivity?)?.hideToolbar()
     }
+
+
+
 }
