@@ -350,8 +350,9 @@
                     android:layout_marginRight="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                    android:id="@+id/you_tube_player_view"
+                <fragment
+                    android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+                    android:id="@+id/you_tube_player"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginTop="20dp"

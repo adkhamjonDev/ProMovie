@@ -94,5 +94,7 @@ dependencies {
 
     implementation 'com.github.JobGetabu:DroidNet:v2.0.0'
 
-    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
+
 }
