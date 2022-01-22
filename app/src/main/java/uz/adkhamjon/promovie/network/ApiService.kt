@@ -6,9 +6,11 @@ import uz.adkhamjon.promovie.models.MainClass
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import uz.adkhamjon.promovie.models.Credits.CreditsModel
 import uz.adkhamjon.promovie.models.Details.MovieDetails
 import uz.adkhamjon.promovie.models.Images.ImageModel
 import uz.adkhamjon.promovie.models.Similar.SimilarClass
+import uz.adkhamjon.promovie.models.Video.VideoModel
 import uz.adkhamjon.promovie.utils.Config
 
 interface ApiService {
@@ -63,4 +65,18 @@ interface ApiService {
         @Query("language") category: String="en-US",
         @Query("query") query: String,
     ): MainClass
+
+    @GET("3/movie/{movie_id}/videos")
+    suspend fun getVideos(
+        @Path("movie_id") movie_id:Int,
+        @Query("api_key") api_key:String=Config.API_KEY,
+        @Query("language") category: String="en-US"
+    ): VideoModel
+
+    @GET("3/movie/{movie_id}/credits")
+    suspend fun getCredits(
+        @Path("movie_id") movie_id:Int,
+        @Query("api_key") api_key:String=Config.API_KEY,
+        @Query("language") category: String="en-US"
+    ): CreditsModel
 }

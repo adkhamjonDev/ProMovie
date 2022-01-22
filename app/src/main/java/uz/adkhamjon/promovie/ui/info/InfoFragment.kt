@@ -19,9 +19,6 @@ import kotlinx.coroutines.*
 import uz.adkhamjon.promovie.App
 import uz.adkhamjon.promovie.MainActivity
 import uz.adkhamjon.promovie.R
-import uz.adkhamjon.promovie.adapters.CompanyItemAdapter
-import uz.adkhamjon.promovie.adapters.ImageItemAdapter
-import uz.adkhamjon.promovie.adapters.SimilarAdapter
 import uz.adkhamjon.promovie.databinding.FragmentInfoBinding
 import uz.adkhamjon.promovie.models.Details.MovieDetails
 import uz.adkhamjon.promovie.utils.Config
@@ -30,6 +27,10 @@ import javax.inject.Inject
 import androidx.fragment.app.FragmentTransaction
 
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
+import android.content.Intent
+import android.net.Uri
+import uz.adkhamjon.promovie.adapters.*
+
 
 class InfoFragment : Fragment() {
     private lateinit var binding:FragmentInfoBinding
@@ -39,7 +40,8 @@ class InfoFragment : Fragment() {
     private lateinit var companyItemAdapter: CompanyItemAdapter
     private lateinit var imageItemAdapter: ImageItemAdapter
     private lateinit var similarAdapter: SimilarAdapter
-    private lateinit var movieDetails: MovieDetails
+    private lateinit var videoItemAdapter: VideoItemAdapter
+    private lateinit var creditsItemAdapter: CreditsItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +56,7 @@ class InfoFragment : Fragment() {
             movieViewModel.getDetails(movieID).observe(viewLifecycleOwner, {
                 when (it.status) {
                     Status.ERROR -> {
-
+                        Toast.makeText(requireContext(), "Error while loading detials", Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
 
@@ -71,20 +73,26 @@ class InfoFragment : Fragment() {
             movieViewModel.getImages(movieID).observe(viewLifecycleOwner, {
                 when (it.status) {
                     Status.ERROR -> {
+                        Toast.makeText(requireContext(), "Error while loading images", Toast.LENGTH_SHORT).show()
 
                     }
                     Status.LOADING -> {
 
                     }
                     Status.SUCCESS -> {
-                        imageItemAdapter= ImageItemAdapter(it.data!!.backdrops,requireContext())
-                        val manager= CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL,true)
-                        binding.imageRecView.layoutManager=manager
-                        binding.imageRecView.setHasFixedSize(true)
-                        manager.maxVisibleItems=3
-                        manager.setPostLayoutListener(CarouselZoomPostLayoutListener())
+                        imageItemAdapter= ImageItemAdapter(it.data!!.backdrops,requireContext()
+                            ,object:ImageItemAdapter.OnItemClickListener{
+                                override fun onItemClick(position: Int) {
+                                    val list=ArrayList<String>()
+                                    it.data.backdrops.forEach {
+                                        list.add(it.file_path)
+                                    }
+
+                                    val bundle= bundleOf("pos" to position,"list" to list)
+                                    findNavController().navigate(R.id.imageFragment,bundle)
+                                }
+                            })
                         binding.imageRecView.adapter = imageItemAdapter
-                        binding.imageRecView.addOnScrollListener(CenterScrollListener())
                     }
                 }
             })
@@ -94,6 +102,7 @@ class InfoFragment : Fragment() {
             movieViewModel.getSimilar(movieID).observe(viewLifecycleOwner, {
                 when (it.status) {
                     Status.ERROR -> {
+                        Toast.makeText(requireContext(), "Error while loading similars", Toast.LENGTH_SHORT).show()
 
                     }
                     Status.LOADING -> {
@@ -113,6 +122,60 @@ class InfoFragment : Fragment() {
             })
 
         }
+        CoroutineScope(Dispatchers.Main).launch {
+            movieViewModel.getVideo(movieID).observe(viewLifecycleOwner, {
+                when (it.status) {
+                    Status.ERROR -> {
+                        Toast.makeText(requireContext(), "Error while loading videos", Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        videoItemAdapter= VideoItemAdapter(it.data!!.results,requireContext(),
+                            object:VideoItemAdapter.OnItemClickListener{
+                                override fun onItemClick(id: String) {
+
+                                }
+                            })
+                        binding.videoRecView.adapter=videoItemAdapter
+
+                    }
+                }
+            })
+
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            movieViewModel.getCredits(movieID).observe(viewLifecycleOwner, {
+                when (it.status) {
+                    Status.ERROR -> {
+                        Toast.makeText(requireContext(), "Error while loading credits", Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        creditsItemAdapter= CreditsItemAdapter(it.data!!.cast,requireContext(),
+                            object:CreditsItemAdapter.OnItemClickListener{
+                                override fun onItemClick(position:Int) {
+                                    val list=ArrayList<String>()
+                                    it.data.cast.forEach {cast->
+                                        list.add(cast.profile_path)
+                                    }
+
+                                    val bundle= bundleOf("pos" to position,"list" to list)
+                                    findNavController().navigate(R.id.imageFragment,bundle)
+                                }
+                            })
+                        binding.creditsRecView.adapter=creditsItemAdapter
+
+                    }
+                }
+            })
+
+        }
+
+
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -155,11 +218,13 @@ class InfoFragment : Fragment() {
 
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as MainActivity?)?.hideToolbar()
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         (activity as MainActivity?)?.showToolbar()

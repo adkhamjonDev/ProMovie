@@ -1,5 +1,8 @@
 package uz.adkhamjon.promovie.models.Images
 
+import android.os.Parcelable
+import java.io.Serializable
+
 data class Backdrop(
     val aspect_ratio: Double,
     val file_path: String,
@@ -8,4 +11,4 @@ data class Backdrop(
     val vote_average: Double,
     val vote_count: Int,
     val width: Int
-)
+):Serializable

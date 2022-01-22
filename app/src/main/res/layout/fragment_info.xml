@@ -181,6 +181,7 @@
             </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:paddingTop="10dp"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -336,7 +337,7 @@
                     android:layout_height="wrap_content"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="OVERVIEW"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginLeft="10dp"
@@ -353,12 +354,58 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="ACTORS"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/teal_200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <androidx.recyclerview.widget.RecyclerView
+                tools:listitem="@layout/credits_item"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/creditsRecView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="IMAGES"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/teal_200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                tools:listitem="@layout/image_item"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:id="@+id/imageRecView"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"/>
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="VIDEOS"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/teal_200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                tools:listitem="@layout/video_item"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/videoRecView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginLeft="10dp"
@@ -378,6 +425,7 @@
     </ScrollView>
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/container"
+        android:visibility="visible"
         app:shimmer_duration="800"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

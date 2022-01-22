@@ -18,6 +18,8 @@ class MovieRepository @Inject constructor(
     suspend fun getImages(id:Int)= flow { emit(apiService.getMovieImages(movie_id = id)) }.flowOn(Dispatchers.IO)
     suspend fun getSimilar(id:Int)= flow { emit(apiService.getSimilar(movie_id = id)) }.flowOn(Dispatchers.IO)
     suspend fun search(str:String)= flow { emit(apiService.getSearchMovies(query = str)) }.flowOn(Dispatchers.IO)
+    suspend fun getVideos(id:Int)= flow { emit(apiService.getVideos(movie_id = id)) }.flowOn(Dispatchers.IO)
+    suspend fun getCredits(id:Int)= flow { emit(apiService.getCredits(movie_id = id)) }.flowOn(Dispatchers.IO)
 
 
 }

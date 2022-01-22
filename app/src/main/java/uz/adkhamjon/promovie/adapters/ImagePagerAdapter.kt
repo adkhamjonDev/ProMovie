@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import uz.adkhamjon.promovie.R
 import uz.adkhamjon.promovie.models.Images.Backdrop
 
-class  ImagePagerAdapter(val context: Context, private val list: List<Backdrop>): PagerAdapter() {
+class  ImagePagerAdapter(val context: Context, private val list: List<String>): PagerAdapter() {
     private lateinit var layoutInflater: LayoutInflater
     override fun getCount(): Int {
         return list.size
@@ -25,7 +25,7 @@ class  ImagePagerAdapter(val context: Context, private val list: List<Backdrop>)
         val view=layoutInflater.inflate(R.layout.image_pager_item,container,false)
 
         val imageView:ImageView = view.findViewById(R.id.image)
-        Glide.with(context).load("https://image.tmdb.org/t/p/w500/${list[position].file_path}").into(imageView)
+        Glide.with(context).load("https://image.tmdb.org/t/p/w500/${list[position]}").into(imageView)
         container.addView(view,0)
         return view
     }

@@ -1,4 +1,5 @@
 package uz.adkhamjon.promovie
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.FragmentTransaction
@@ -8,10 +9,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -32,8 +35,15 @@ import com.droidnet.DroidListener
 import uz.adkhamjon.promovie.databinding.TypeDialogBinding
 import uz.adkhamjon.promovie.viewmodels.TypeViewModel
 import com.droidnet.DroidNet
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import uz.adkhamjon.promovie.ui.home.HomeFragment
 import uz.adkhamjon.promovie.viewmodels.InternetViewModel
+import java.io.File
 
 
 class MainActivity : AppCompatActivity(), DroidListener {
@@ -105,16 +115,17 @@ class MainActivity : AppCompatActivity(), DroidListener {
                 R.id.connect -> {
                     val dialog = AlertDialog.Builder(this)
                     dialog.setTitle(R.string.connect_with_us)
-                    dialog.setMessage("Email: ussdmobile@gamil.com")
+                    dialog.setMessage("Email: adkhamjon.rakhimov.dev@gamil.com")
                     dialog.setPositiveButton(R.string.send_email,
                         DialogInterface.OnClickListener { dialog, id ->
-                            val intent = Intent(Intent.ACTION_SENDTO)
-                            intent.data =
-                                Uri.parse("mailto:") // only email apps should handle this
-
-                            intent.putExtra(Intent.EXTRA_EMAIL, "adkhamjon.rakhimov.dev@gamil.com")
-                            intent.putExtra(Intent.EXTRA_SUBJECT, "subject")
-                            if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+                            val emailIntent = Intent(
+                                Intent.ACTION_SENDTO, Uri.parse(
+                                    "mailto:adkhamjon.rakhimov.dev@gamil.com"
+                                )
+                            )
+                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "subject")
+                            emailIntent.putExtra(Intent.EXTRA_TEXT, "body")
+                            startActivity(Intent.createChooser(emailIntent, "Chooser Title"))
 
 
                         })
