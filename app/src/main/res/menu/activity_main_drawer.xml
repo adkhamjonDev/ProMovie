@@ -2,5 +2,39 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_divider">
+        <item
+            android:id="@+id/telegram"
+            android:icon="@drawable/ic_telegram"
+            android:title="@string/telegram_channel" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_divider2">
+        <item
+            android:id="@+id/connect"
+            android:icon="@drawable/ic_email"
+            android:title="@string/connect_with_us" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_divider3">
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/share" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_divider4">
+        <item
+            android:id="@+id/rate"
+            android:icon="@drawable/ic_star"
+            android:title="@string/rate" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_divider5">
+        <item
+            android:id="@+id/info"
+            android:icon="@drawable/ic_info"
+            android:title="@string/about_us" />
+    </group>
 </menu>

@@ -9,6 +9,7 @@ import android.app.Application
 
 import dagger.BindsInstance
 import uz.adkhamjon.promovie.ui.info.InfoFragment
+import uz.adkhamjon.promovie.ui.search.SearchFragment
 
 
 @Singleton
@@ -17,6 +18,7 @@ interface AppComponent {
 
     fun inject(homeFragment: HomeFragment)
     fun inject(infoFragment: InfoFragment)
+    fun inject(searchFragment: SearchFragment)
 
     @Component.Builder
     interface Builder {

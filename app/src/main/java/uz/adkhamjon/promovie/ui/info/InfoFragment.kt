@@ -31,17 +31,6 @@ import androidx.fragment.app.FragmentTransaction
 
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
 
-
-
-
-
-
-
-
-
-
-
-
 class InfoFragment : Fragment() {
     private lateinit var binding:FragmentInfoBinding
     @Inject
@@ -50,6 +39,7 @@ class InfoFragment : Fragment() {
     private lateinit var companyItemAdapter: CompanyItemAdapter
     private lateinit var imageItemAdapter: ImageItemAdapter
     private lateinit var similarAdapter: SimilarAdapter
+    private lateinit var movieDetails: MovieDetails
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,13 +60,12 @@ class InfoFragment : Fragment() {
 
                     }
                     Status.SUCCESS -> {
-                        val details = it.data
-                        setDetails(details!!)
-
+                        setDetails(it.data!!)
+                        binding.container.visibility=View.GONE
+                        binding.containerLinear.visibility=View.VISIBLE
                     }
                 }
             })
-
         }
         CoroutineScope(Dispatchers.Main).launch {
             movieViewModel.getImages(movieID).observe(viewLifecycleOwner, {
@@ -124,41 +113,11 @@ class InfoFragment : Fragment() {
             })
 
         }
-
-        val youtubeFragment:YouTubePlayerFragment=childFragmentManager
-            .findFragmentById(R.id.you_tube_player) as YouTubePlayerFragment
-        youtubeFragment.initialize(Config.YOUTUBE_API_KEY,object:YouTubePlayer.OnInitializedListener{
-            override fun onInitializationSuccess(
-                p0: YouTubePlayer.Provider?,
-                p1: YouTubePlayer?,
-                p2: Boolean
-            ) {
-                if(p1==null) return
-                if(p2){
-                    p1.play()
-                }
-                else{
-                    p1.cueVideo("3F_hFXKVBuo")
-                }
-
-            }
-
-            override fun onInitializationFailure(
-                p0: YouTubePlayer.Provider?,
-                p1: YouTubeInitializationResult?
-            ) {
-
-            }
-
-        })
-
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
-
         return binding.root
     }
-
     @SuppressLint("SetTextI18n")
     private fun setDetails(details: MovieDetails){
         binding.tittle.text=details.title

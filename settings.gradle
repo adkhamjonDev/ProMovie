@@ -10,4 +10,3 @@ dependencyResolutionManagement {
 rootProject.name = "ProMovie"
 include ':app'
 include ':drawerbehavior'
-include ':youtube'

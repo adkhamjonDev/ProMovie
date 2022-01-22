@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import uz.adkhamjon.promovie.models.Details.MovieDetails
 import uz.adkhamjon.promovie.models.Images.ImageModel
+import uz.adkhamjon.promovie.models.MainClass
 import uz.adkhamjon.promovie.models.Similar.SimilarClass
 
 import uz.adkhamjon.promovie.network.ApiService
@@ -42,6 +43,7 @@ class MovieViewModel @Inject constructor(
     private val movieDetailsLiveData=MutableLiveData<Resource<MovieDetails>>()
     private val movieImagesLiveData=MutableLiveData<Resource<ImageModel>>()
     private val movieSimilarLiveData=MutableLiveData<Resource<SimilarClass>>()
+    private val movieSearchLiveData=MutableLiveData<Resource<MainClass>>()
 
     fun getDetails(id:Int):MutableLiveData<Resource<MovieDetails>>{
         viewModelScope.launch {
@@ -80,5 +82,18 @@ class MovieViewModel @Inject constructor(
                 }
         }
         return movieSimilarLiveData
+    }
+    //-------------------------------------------------------------
+    fun getSearch(str:String):MutableLiveData<Resource<MainClass>>{
+        viewModelScope.launch {
+            movieSearchLiveData.postValue(Resource.loading(null))
+            movieRepository.search(str)
+                .catch {e->
+                    movieSearchLiveData.postValue(Resource.error(e.message?:"Error",null))
+                }.collect {
+                    movieSearchLiveData.postValue(Resource.success(it))
+                }
+        }
+        return movieSearchLiveData
     }
 }

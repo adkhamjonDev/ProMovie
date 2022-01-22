@@ -47,13 +47,20 @@ interface ApiService {
     @GET("3/movie/{movie_id}/images")
     suspend fun getMovieImages(
         @Path("movie_id") movie_id:Int,
-        @Query("api_key") api_key:String="44f66b1676556437f4731985995f2dea",
+        @Query("api_key") api_key:String=Config.API_KEY,
     ): ImageModel
 
     @GET("3/movie/{movie_id}/similar")
     suspend fun getSimilar(
         @Path("movie_id") movie_id:Int,
-        @Query("api_key") api_key:String="44f66b1676556437f4731985995f2dea",
+        @Query("api_key") api_key:String=Config.API_KEY,
         @Query("language") category: String="en-US",
     ): SimilarClass
+
+    @GET("3/search/multi")
+    suspend fun getSearchMovies(
+        @Query("api_key") api_key:String=Config.API_KEY,
+        @Query("language") category: String="en-US",
+        @Query("query") query: String,
+    ): MainClass
 }

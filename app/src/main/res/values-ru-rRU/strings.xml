@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">ProMovie</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="internet_subtitle">Не удалось подключиться к серверу. Приносим свои извинение за предоставленное не удобство</string>
 
+
+    <string name="popular_txt">Популярный</string>
+    <string name="top_txt">Самые популярные</string>
+    <string name="upcoming_txt">Предстоящие</string>
+    <string name="now_txt">Сейчас играет</string>
+
+    <string name="telegram_channel">Телеграм канал</string>
+    <string name="connect_with_us">Свяжитесь с нами</string>
+    <string name="share">Поделиться</string>
+    <string name="rate">Оценка</string>
+    <string name="about_us">О нас</string>
+
+    <string name="back">Назад</string>
+
+    <string name="about_txt">О нас</string>
+
+    <string name="send_email">Отправить письмо</string>
 </resources>

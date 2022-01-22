@@ -1,6 +1,11 @@
 package uz.adkhamjon.promovie
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.FragmentTransaction
+import android.content.ActivityNotFoundException
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -17,6 +22,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -38,6 +44,7 @@ class MainActivity : AppCompatActivity(), DroidListener {
     private lateinit var internetViewModel: InternetViewModel
     private lateinit var mDroidNet: DroidNet
     private var internet=false
+    @SuppressLint("QueryPermissionsNeeded")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         //----------------------------------------------------
@@ -67,6 +74,72 @@ class MainActivity : AppCompatActivity(), DroidListener {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+
+        navView.setNavigationItemSelectedListener{
+            when(it.itemId){
+                R.id.telegram->{
+
+                }
+                R.id.share -> {
+                    ShareCompat.IntentBuilder.from(this)
+                        .setType("text/plain")
+                        .setText("http://play.google.com/store/apps/details?id=${this.packageName}")
+                        .startChooser()
+
+                }
+                R.id.rate -> {
+                    val uri = Uri.parse("market://details?id=" + this.packageName)
+                    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                    try {
+                        startActivity(goToMarket)
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("http://play.google.com/store/apps/details?id=${this.packageName}")
+                            )
+                        )
+                    }
+                }
+                R.id.connect -> {
+                    val dialog = AlertDialog.Builder(this)
+                    dialog.setTitle(R.string.connect_with_us)
+                    dialog.setMessage("Email: ussdmobile@gamil.com")
+                    dialog.setPositiveButton(R.string.send_email,
+                        DialogInterface.OnClickListener { dialog, id ->
+                            val intent = Intent(Intent.ACTION_SENDTO)
+                            intent.data =
+                                Uri.parse("mailto:") // only email apps should handle this
+
+                            intent.putExtra(Intent.EXTRA_EMAIL, "adkhamjon.rakhimov.dev@gamil.com")
+                            intent.putExtra(Intent.EXTRA_SUBJECT, "subject")
+                            if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+
+
+                        })
+                    dialog.setNegativeButton(R.string.back,
+                        DialogInterface.OnClickListener { dialog, id ->
+
+                        })
+                    val alertDialog = dialog.create()
+                    alertDialog.show()
+                }
+                R.id.info -> {
+                    val dialog = AlertDialog.Builder(this)
+                    dialog.setTitle(R.string.about_us)
+                    dialog.setMessage(R.string.about_txt)
+                    dialog.setPositiveButton(R.string.back,
+                        DialogInterface.OnClickListener { dialog, id ->
+                        })
+                    val alertDialog = dialog.create()
+                    alertDialog.show()
+
+                }
+            }
+            binding.drawerLayout.closeDrawers()
+            true
+        }
 
         binding.appBarMain.retry.setOnClickListener {
             if(internet){
@@ -108,22 +181,22 @@ class MainActivity : AppCompatActivity(), DroidListener {
             val alertDialog=builder.create()
             binding1.popular.setOnClickListener {
                 typeViewModel.setDialogType("Popular")
-                binding.appBarMain.tittle.text="Popular"
+                binding.appBarMain.tittle.text=getString(R.string.popular_txt)
                 alertDialog.dismiss()
             }
             binding1.top.setOnClickListener {
                 typeViewModel.setDialogType("Top Rated")
-                binding.appBarMain.tittle.text="Top Rated"
+                binding.appBarMain.tittle.text=getString(R.string.top_txt)
                 alertDialog.dismiss()
             }
             binding1.upcoming.setOnClickListener {
                 typeViewModel.setDialogType("Upcoming")
-                binding.appBarMain.tittle.text="Upcoming"
+                binding.appBarMain.tittle.text=getString(R.string.upcoming_txt)
                 alertDialog.dismiss()
             }
             binding1.nowPlaying.setOnClickListener {
                 typeViewModel.setDialogType("Now Playing")
-                binding.appBarMain.tittle.text="Now Playing"
+                binding.appBarMain.tittle.text=getString(R.string.now_txt)
                 alertDialog.dismiss()
             }
             alertDialog.show()
@@ -132,7 +205,6 @@ class MainActivity : AppCompatActivity(), DroidListener {
         binding.appBarMain.search.setOnClickListener {
             navController.navigate(R.id.searchFragment)
         }
-
     }
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {

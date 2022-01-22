@@ -18,7 +18,7 @@
             android:textSize="16sp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:text="Popular"
+            android:text="@string/popular_txt"
             android:textColor="@color/txt_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -37,7 +37,7 @@
             android:textSize="16sp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:text="Top Rated"
+            android:text="@string/top_txt"
             android:textColor="@color/txt_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -56,7 +56,7 @@
         android:textSize="16sp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Upcoming"
+        android:text="@string/upcoming_txt"
         android:textColor="@color/txt_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -75,7 +75,7 @@
             android:textSize="16sp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:text="Now Playing"
+            android:text="@string/now_txt"
             android:textColor="@color/txt_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

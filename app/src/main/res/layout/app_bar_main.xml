@@ -164,7 +164,7 @@
                             android:layout_height="35dp">
                             <ImageView
                                 android:padding="5dp"
-                                android:src="@drawable/ic_baseline_more_vert_24"
+                                android:src="@drawable/ic_baseline_more_vert_24_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
                         </androidx.cardview.widget.CardView>

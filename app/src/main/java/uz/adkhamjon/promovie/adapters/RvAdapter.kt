@@ -13,7 +13,10 @@ import uz.adkhamjon.promovie.databinding.GridItem3Binding
 import uz.adkhamjon.promovie.databinding.LinearItemBinding
 import uz.adkhamjon.promovie.models.MovieClass
 
-class RvAdapter(var context: Context,var gridLayoutManager: GridLayoutManager,var onItemClickListener: OnItemClickListener) :
+class RvAdapter(
+    var context: Context,
+    var gridLayoutManager: GridLayoutManager,
+    var onItemClickListener: OnItemClickListener) :
     PagingDataAdapter<MovieClass, RecyclerView.ViewHolder>(MyDiffUtill()) {
     class MyDiffUtill : DiffUtil.ItemCallback<MovieClass>() {
         override fun areItemsTheSame(oldItem: MovieClass, newItem: MovieClass): Boolean {
