@@ -3,6 +3,7 @@ package uz.adkhamjon.promovie.ui.image
 import android.Manifest
 import android.R.attr
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -14,27 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.ixuea.android.downloader.DownloadService
 import uz.adkhamjon.promovie.MainActivity
-import uz.adkhamjon.promovie.R
 import uz.adkhamjon.promovie.adapters.ImagePagerAdapter
 import uz.adkhamjon.promovie.databinding.FragmentImageBinding
 import android.os.Environment
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import java.io.File
-import com.ixuea.android.downloader.domain.DownloadInfo
-import com.ixuea.android.downloader.callback.DownloadListener
-
-import com.ixuea.android.downloader.exception.DownloadException
-import com.karumi.dexter.PermissionToken
-
-import com.karumi.dexter.listener.PermissionDeniedResponse
-
-import com.karumi.dexter.listener.PermissionGrantedResponse
-
-import com.karumi.dexter.listener.single.PermissionListener
-
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.listener.PermissionRequest
 
 
 import android.content.pm.PackageManager
@@ -42,8 +27,30 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import android.app.Notification
+import android.app.WallpaperManager
+import android.graphics.Bitmap
+import com.artjimlop.altex.AltexImageDownloader
+import com.google.android.gms.common.images.ImageManager
+import uz.adkhamjon.promovie.R
+
+import android.widget.LinearLayout
+import android.widget.TextView
+
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.graphics.drawable.BitmapDrawable
+import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.squareup.picasso.Picasso
+import java.io.IOException
 
 
+
+
+@RequiresApi(Build.VERSION_CODES.N)
 class ImageFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private lateinit var binding:FragmentImageBinding
     private lateinit var imagePagerAdapter: ImagePagerAdapter
@@ -60,13 +67,11 @@ class ImageFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     ): View {
         (activity as MainActivity?)?.hideToolbar()
         binding=FragmentImageBinding.inflate(inflater, container, false)
-
-
         if(arguments!=null){
             pos= arguments?.getInt("pos") as Int
             list=arguments?.getStringArrayList("list") as ArrayList<String>
         }
-
+        Picasso.get().load("https://image.tmdb.org/t/p/w500/${list[pos]}").into(binding.image)
         imagePagerAdapter= ImagePagerAdapter(requireContext(),list)
         binding.viewPager.adapter=imagePagerAdapter
         binding.viewPager.currentItem=pos
@@ -75,7 +80,7 @@ class ImageFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             findNavController().popBackStack()
         }
         binding.rotate.setOnClickListener {
-
+            (activity as MainActivity?)?.toLandscape()
         }
         binding.share.setOnClickListener {
             ShareCompat.IntentBuilder.from(requireActivity())
@@ -95,66 +100,82 @@ class ImageFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     override fun onDestroy() {
         super.onDestroy()
         (activity as MainActivity?)?.showToolbar()
+        (activity as MainActivity?)?.toPortrait()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onMenuItemClick(p0: MenuItem?): Boolean {
         when(p0?.itemId){
             R.id.download->{
-                val downloadManager = DownloadService.
-                getDownloadManager(requireContext().applicationContext)
-                //create download info set download uri and save path.
-                val dirPath="${Environment.getExternalStorageDirectory()}/DCIM"
-                val fileName=list[currentItem]
-                file= File(dirPath,fileName)
-                val downloadInfo = DownloadInfo
-                    .Builder()
-                    .setUrl(
-                    "https://image.tmdb.org/t/p/w500/${list[currentItem]}"
-                )
-                    .setPath(file.absolutePath)
-                    .build()
+//                val downloadManager = DownloadService.
+//                getDownloadManager(requireContext().applicationContext)
+//                val dirPath="${Environment.getExternalStorageDirectory()}/DCIM"
+//                val fileName=list[currentItem]
+//                file= File(dirPath,fileName)
+//                val downloadInfo = DownloadInfo
+//                    .Builder()
+//                    .setUrl(
+//                    "https://image.tmdb.org/t/p/w500/${list[currentItem]}"
+//                ).setPath(file.absolutePath)
+//                    .build()
+//               downloadInfo.downloadListener = object : DownloadListener {
+//                   override fun onStart() {
+//
+//
+//                   }
+//
+//                   override fun onWaited() {
+//
+//
+//                   }
+//
+//                   override fun onPaused() {
+//
+//
+//                   }
+//
+//                   override fun onDownloading(progress: Long, size: Long) {
+//
+//                   }
+//
+//                   override fun onRemoved() {
+//
+//                   }
+//
+//                   override fun onDownloadSuccess() {
+//
+//                   }
+//
+//                   override fun onDownloadFailed(e: DownloadException) {
+//
+//                   }
+//               }
+//
+//               downloadManager.download(downloadInfo)
 
 
+                AltexImageDownloader(object:
+                    AltexImageDownloader.OnImageLoaderListener{
+                    override fun onError(error: AltexImageDownloader.ImageError?) {
+                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                    }
 
+                    override fun onProgressChange(percent: Int) {
+                        Toast.makeText(requireContext(), "Downloading", Toast.LENGTH_SHORT).show()
+                    }
 
-
-               downloadInfo.downloadListener = object : DownloadListener {
-                   override fun onStart() {
-
-
-                   }
-
-                   override fun onWaited() {
-
-
-                   }
-
-                   override fun onPaused() {
-
-
-                   }
-
-                   override fun onDownloading(progress: Long, size: Long) {
-
-                   }
-
-                   override fun onRemoved() {
-
-                   }
-
-                   override fun onDownloadSuccess() {
-
-                   }
-
-                   override fun onDownloadFailed(e: DownloadException) {
-
-                   }
-               }
-
-               downloadManager.download(downloadInfo)
+                    override fun onComplete(result: Bitmap?) {
+                        Toast.makeText(requireContext(), "Downloaded", Toast.LENGTH_SHORT).show()
+                    }
+                }).download("https://image.tmdb.org/t/p/w500/${list[currentItem]}",
+                    true)
+                AltexImageDownloader.writeToDisk(requireContext(),
+                    "https://image.tmdb.org/t/p/w500/${list[currentItem]}",
+                    "Promovie")
            }
             R.id.wallpaper->{
 
+            showBottomSheetDialog()
             }
         }
         return false
@@ -196,4 +217,45 @@ class ImageFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         }
     }
 
+    private fun showBottomSheetDialog() {
+        val wallManager = WallpaperManager.getInstance(context)
+        val bmpImg = (binding.image.drawable as BitmapDrawable).bitmap
+        val bottomSheetDialog = BottomSheetDialog(requireContext(),R.style.CustomBottomSheetDialogTheme)
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog)
+        val home=bottomSheetDialog.findViewById<TextView>(R.id.home)
+        val lock=bottomSheetDialog.findViewById<TextView>(R.id.lock)
+        val homeLock=bottomSheetDialog.findViewById<TextView>(R.id.homeAndLock)
+        home?.setOnClickListener {
+            try {
+                wallManager.setBitmap(bmpImg,null, true,WallpaperManager.FLAG_SYSTEM)
+                Toast.makeText(context, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show()
+
+            } catch (e: IOException) {
+                Toast.makeText(context, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show()
+            }
+            bottomSheetDialog.hide()
+        }
+        lock?.setOnClickListener {
+            try {
+                wallManager.setBitmap(bmpImg,null, true,WallpaperManager.FLAG_LOCK)
+                Toast.makeText(context, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show()
+            } catch (e: IOException) {
+                Toast.makeText(context, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show()
+            }
+            bottomSheetDialog.hide()
+        }
+        homeLock?.setOnClickListener {
+            try {
+                wallManager.setBitmap(bmpImg,null, true,WallpaperManager.FLAG_SYSTEM)
+                wallManager.setBitmap(bmpImg,null, true,WallpaperManager.FLAG_LOCK)
+                Toast.makeText(context, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show()
+
+            } catch (e: IOException) {
+                Toast.makeText(context, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show()
+            }
+            bottomSheetDialog.hide()
+            bottomSheetDialog.hide()
+        }
+        bottomSheetDialog.show()
+    }
 }

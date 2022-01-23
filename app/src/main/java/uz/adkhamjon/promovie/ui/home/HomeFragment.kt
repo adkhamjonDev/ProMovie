@@ -87,6 +87,7 @@ class HomeFragment : Fragment() {
                     lifecycleScope.launch {
                         movieViewModel.popular.collectLatest {
                             rvAdapter.submitData(it)
+
                         }
                     }
                 }

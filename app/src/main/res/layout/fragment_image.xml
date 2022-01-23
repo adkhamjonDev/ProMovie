@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/toolbar_background_color"
+        android:background="#212121"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/back"
-                app:cardBackgroundColor="@color/toolbar_background_color"
+                app:cardBackgroundColor="#212121"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 android:clickable="true"
@@ -45,7 +45,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/more"
-                app:cardBackgroundColor="@color/toolbar_background_color"
+                app:cardBackgroundColor="#212121"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 android:clickable="true"
@@ -65,7 +65,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/rotate"
-                app:cardBackgroundColor="@color/toolbar_background_color"
+                app:cardBackgroundColor="#212121"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 android:clickable="true"
@@ -85,7 +85,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/share"
-                app:cardBackgroundColor="@color/toolbar_background_color"
+                app:cardBackgroundColor="#212121"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 android:clickable="true"
@@ -109,5 +109,11 @@
         android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

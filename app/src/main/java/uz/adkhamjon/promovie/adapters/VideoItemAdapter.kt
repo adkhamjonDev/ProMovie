@@ -36,7 +36,7 @@ class VideoItemAdapter(
         holder.videoItemBinding.site.text=obj.site
 
         holder.itemView.setOnClickListener {
-            onItemClickListener.onItemClick(obj.id)
+            onItemClickListener.onItemClick(obj.key)
         }
     }
     override fun getItemCount(): Int {

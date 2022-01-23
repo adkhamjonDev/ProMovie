@@ -6,6 +6,7 @@ import android.app.FragmentTransaction
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity(), DroidListener {
         //--------------------------------------------------------
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setSupportActionBar(binding.appBarMain.toolbar)
         mDroidNet = DroidNet.getInstance()
         mDroidNet.addInternetConnectivityListener(this)
@@ -233,6 +235,13 @@ class MainActivity : AppCompatActivity(), DroidListener {
     }
     fun showToolbar(){
         binding.appBarMain.toolbar.visibility=View.VISIBLE
+    }
+
+    fun toPortrait(){
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
+    fun toLandscape(){
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     }
     override fun onInternetConnectivityChanged(isConnected: Boolean) {
         if(!isConnected){
