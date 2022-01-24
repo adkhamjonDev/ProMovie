@@ -11,7 +11,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="internet_subtitle">Не удалось подключиться к серверу. Приносим свои извинение за предоставленное не удобство</string>
+    <string name="internet_subtitle">Failed to connect to the server. We apologize for the inconvenience</string>
 
 
     <string name="popular_txt">Popular</string>
